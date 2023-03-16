@@ -1,0 +1,29 @@
+{
+  "name": "store",
+  "version": "1.0.0",
+  "description": "Practice CRUD",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "28.1.0",
+    "nodemon": "^2.0.21",
+    "supertest": "6.2.3"
+  },
+  "dependencies": {
+    "bcryptjs": "2.4.3",
+    "cors": "2.8.5",
+    "dotenv": "9.0.2",
+    "express": "^4.18.2",
+    "express-fileupload": "^1.4.0",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^6.10.2",
+    "mongoose-unique-validator": "3.0.0",
+    "uuid": "8.3.2"
+  }
+}
