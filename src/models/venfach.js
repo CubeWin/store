@@ -4,7 +4,7 @@ const venfachSchema = Schema(
     {
         clie_id: {
             type: Schema.Types.ObjectId,
-            required: [true, "Especificar el proveedor."],
+            required: [true, "Especificar el cliente."],
             ref: "Cliente",
         },
         numdoc: {

@@ -4,13 +4,17 @@ const dataBaseConnection = async () => {
     try {
         const { HOST, DATABASE } = process.env;
         const URI = `mongodb://${HOST}/${DATABASE}`;
+
+        mongoose.set("strictQuery", true);
         await mongoose.connect(URI, {
             useUnifiedTopology: true,
             useNewUrlParser: true,
         });
+
         console.log(`Base de datos Activo.`);
     } catch (error) {
         console.log(`Error: `, error);
     }
 };
+
 module.exports = { dataBaseConnection };

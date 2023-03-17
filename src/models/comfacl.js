@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose");
 
 const comfaclSchema = Schema(
     {
-        comfacb: {
+        comfach: {
             type: Schema.Types.ObjectId,
             required: [true, "Especificar la factura."],
             ref: "Comfach",

@@ -3,7 +3,7 @@ const fileUpload = require("express-fileupload");
 const cors = require("cors");
 const path = require("path");
 
-const { dataBaseConnection } = require("../models/database");
+const { dataBaseConnection } = require("./models/database");
 
 class Server {
     constructor() {
@@ -49,7 +49,7 @@ class Server {
     }
 
     routes() {
-        this.app.use(require("../routes"));
+        this.app.use(require("./routes"));
     }
 
     listen() {

@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-const comfaclSchema = Schema(
+const venfaclSchema = Schema(
     {
         venfacb: {
             type: Schema.Types.ObjectId,
@@ -38,4 +38,4 @@ const comfaclSchema = Schema(
     }
 );
 
-module.exports = model("Comfacl", comfaclSchema);
+module.exports = model("Venfacl", venfaclSchema);

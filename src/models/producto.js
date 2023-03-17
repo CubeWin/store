@@ -10,7 +10,9 @@ const productoSchema = Schema(
             type: String,
             required: [true, "Especificar marca del producto."],
         },
-        color: String,
+        color: {
+            type: String,
+        },
         unidad: {
             type: String,
             required: [
