@@ -42,7 +42,7 @@ const crearUsuario = async (req = request, res = response) => {
             result,
             request: {
                 type: "GET",
-                url: `http://localhost:8080/usuario/${result.id}`,
+                url: `http://localhost:${process.env.PORT || 9090}/usuario/${result.id}`,
             },
         };
 
@@ -57,20 +57,17 @@ const obtenerUnUsuario = async (req = request, res = response) => {
     try {
         const { id } = req.params;
 
-        const result = await User.findOne({ _id: id });
+        const result = await Usuario.findOne({ _id: id });
 
         if (!result) {
-            throw new httpException(
-                400,
-                `no se encontro el usuario ${user} en la BD.`
-            );
+            throw new httpException(400, `no se encontro el usuario en la BD.`);
         }
 
         const data = {
             result,
             request: {
                 type: "GET",
-                url: `http://localhost:8080/usuario/${result.id}`,
+                url: `http://localhost:${process.env.PORT || 9090}/usuario/${result.id}`,
             },
         };
 
@@ -88,22 +85,27 @@ const obtenerUsuarios = async (req = request, res = response) => {
             count: result.length,
             results: result.map((r) => {
                 return {
-                    r,
+                    data: r,
                     request: {
                         type: "GET",
-                        url: `http://localhost:4000/usuario/${r.id}`,
+                        url: `http://localhost:${process.env.PORT || 9090}/usuario/${r.id}`,
                     },
                 };
             }),
         };
-    } catch (error) {}
+        res.status(200).json(data);
+    } catch (error) {
+        const { status, data } = validarDatos(error);
+        res.status(status).json({ data });
+    }
 };
 
 const cambiarPWD = async (req = request, res = response) => {
     try {
         const { id } = req.params;
         const { password, npassword } = req.body;
-
+        console.log(password);
+        console.log(npassword);
         const isUser = await usuario.findById(id);
         if (!isUser) {
             throw new httpException(
@@ -119,14 +121,14 @@ const cambiarPWD = async (req = request, res = response) => {
 
         const { isEncrypt, pwdHash } = await encryptPassword(npassword);
         if (!isEncrypt) {
-            throw new httpExeption(
+            throw new httpException(
                 400,
                 "la clave debe tener 4 digitos como minimo"
             );
         }
 
-        const result = await User.findOneAndUpdate(
-            { _id: isUser.id },
+        const result = await Usuario.findOneAndUpdate(
+            { _id: isUser._id },
             { $set: { password: pwdHash } }
         );
         if (!result) {
@@ -138,7 +140,7 @@ const cambiarPWD = async (req = request, res = response) => {
             result,
             request: {
                 type: "GET",
-                url: `http://localhost:8080/usuario/${result.id}`,
+                url: `http://localhost:${process.env.PORT || 9090}/usuario/${result.id}`,
             },
         };
         res.status(200).json(data);
@@ -166,7 +168,7 @@ const deshabilitarUsuario = async (req = request, res = response) => {
             result,
             request: {
                 type: "GET",
-                url: `http://localhost:8080/usuario/${result.id}`,
+                url: `http://localhost:${process.env.PORT || 9090}/usuario/${result.id}`,
             },
         };
 
@@ -200,6 +202,7 @@ const eliminarUsuario = async (req = request, res = response) => {
 module.exports = {
     crearUsuario,
     obtenerUnUsuario,
+    obtenerUsuarios,
     deshabilitarUsuario,
     eliminarUsuario,
     cambiarPWD,

@@ -7,14 +7,16 @@ const authRoute = require("./auth");
 
 router.use("/", authRoute);
 
-fs.readdirSync(`${__dirname}/`).filter((f)=>{
+fs.readdirSync(`${__dirname}/`).filter((f) => {
     // removemos la extencion del archivo
     const routeFile = f.split(".").slice(0, -1).join(".").toString();
-
+    console.log(routeFile);
     return routeFile !== "index" && routeFile !== "auth" && f !== ".DS_Store"
         ? router.use(`/${routeFile}`, require(`./${routeFile}`))
         : null;
-})
+});
+
+// router.use("/usuario", require("./usuario"));
 
 // * ERROR 404
 router.use("*", (req, res) => {
@@ -25,4 +27,4 @@ router.use("*", (req, res) => {
     });
 });
 
-module.exports= router
+module.exports = router;
