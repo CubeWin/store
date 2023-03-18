@@ -43,7 +43,6 @@ const productoSchema = Schema(
         },
         imagen: {
             type: String,
-            required: [true, "Especificar imágen."],
             default: `no-image`,
         },
     },

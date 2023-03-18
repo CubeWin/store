@@ -42,7 +42,9 @@ const crearUsuario = async (req = request, res = response) => {
             result,
             request: {
                 type: "GET",
-                url: `http://localhost:${process.env.PORT || 9090}/usuario/${result.id}`,
+                url: `http://localhost:${process.env.PORT || 9090}/usuario/${
+                    result.id
+                }`,
             },
         };
 
@@ -67,7 +69,9 @@ const obtenerUnUsuario = async (req = request, res = response) => {
             result,
             request: {
                 type: "GET",
-                url: `http://localhost:${process.env.PORT || 9090}/usuario/${result.id}`,
+                url: `http://localhost:${process.env.PORT || 9090}/usuario/${
+                    result.id
+                }`,
             },
         };
 
@@ -88,7 +92,9 @@ const obtenerUsuarios = async (req = request, res = response) => {
                     data: r,
                     request: {
                         type: "GET",
-                        url: `http://localhost:${process.env.PORT || 9090}/usuario/${r.id}`,
+                        url: `http://localhost:${
+                            process.env.PORT || 9090
+                        }/usuario/${r.id}`,
                     },
                 };
             }),
@@ -140,7 +146,9 @@ const cambiarPWD = async (req = request, res = response) => {
             result,
             request: {
                 type: "GET",
-                url: `http://localhost:${process.env.PORT || 9090}/usuario/${result.id}`,
+                url: `http://localhost:${process.env.PORT || 9090}/usuario/${
+                    result.id
+                }`,
             },
         };
         res.status(200).json(data);
@@ -158,7 +166,6 @@ const deshabilitarUsuario = async (req = request, res = response) => {
             { _id: id },
             { $set: { state: false } }
         );
-
         if (!result) {
             throw new httpException(400, `No se encontro el usuario.`);
         }
@@ -168,7 +175,9 @@ const deshabilitarUsuario = async (req = request, res = response) => {
             result,
             request: {
                 type: "GET",
-                url: `http://localhost:${process.env.PORT || 9090}/usuario/${result.id}`,
+                url: `http://localhost:${process.env.PORT || 9090}/usuario/${
+                    result.id
+                }`,
             },
         };
 

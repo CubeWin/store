@@ -4,30 +4,30 @@ const proveedorSchema = Schema(
     {
         id: {
             type: Schema.Types.ObjectId,
-            require: [true, "No se genero el id correctamente."],
+            required: [true, "No se genero el id correctamente."],
         },
         ruc: {
             type: Number,
-            require: [true, "Ingresar el número de RUC."],
+            required: [true, "Ingresar el número de RUC."],
             unique: true,
         },
         nombre: {
             type: String,
-            require: [true, "Ingresar el nombre."],
+            required: [true, "Ingresar el nombre."],
         },
         rubro: {
             type: String,
-            require: [true, "Ingresar rubro."],
+            required: [true, "Ingresar rubro."],
         },
         correo: {
             type: String,
-            require: [true, "Ingresar correo valido."],
+            required: [true, "Ingresar correo valido."],
             unique: true,
         },
         telefono: {
             type: String,
         },
-        logo: {
+        imagen: {
             type: String,
             default: `no-image`,
         },
