@@ -16,7 +16,7 @@ const logIn = async (req = request, res = response) => {
         if (!result) {
             throw new httpException(
                 400,
-                `El usuario ${username} no se encuentra en la BD.`
+                `El usuario ${username} no se encuentra en la BD o se encuentra deshabilitado.`
             );
         }
 

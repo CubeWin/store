@@ -6,6 +6,7 @@ const uploadFile = (
     extensions = ["png", "jpg", "jpeg"],
     folder = ""
 ) => {
+    console.log('uploada FILE');
     return new Promise((resolve, reject) => {
         const { Archivo } = files;
 

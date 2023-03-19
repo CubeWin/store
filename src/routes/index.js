@@ -10,7 +10,7 @@ router.use("/", authRoute);
 fs.readdirSync(`${__dirname}/`).filter((f) => {
     // removemos la extencion del archivo
     const routeFile = f.split(".").slice(0, -1).join(".").toString();
-    console.log(routeFile);
+    // console.log(routeFile);
     return routeFile !== "index" && routeFile !== "auth" && f !== ".DS_Store"
         ? router.use(`/${routeFile}`, require(`./${routeFile}`))
         : null;

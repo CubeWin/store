@@ -7,19 +7,28 @@ const {
     deshabilitarCliente,
     eliminarCliente,
 } = require("../controllers/cliente");
+const {
+    validarToken,
+    validarRolAdmin,
+    validarRoles,
+} = require("../middlewares");
 
 const clienteRoute = Router();
 
-clienteRoute.get("/", ObtenerClientes);
+clienteRoute.get("/", [validarToken], ObtenerClientes);
 
-clienteRoute.get("/:id", ObtenerUnCliente);
+clienteRoute.get("/:id", [validarToken], ObtenerUnCliente);
 
-clienteRoute.post("/", crearCliente);
+clienteRoute.post(
+    "/",
+    [validarToken, validarRoles("ADMIN_ROLE", "USER_ROLE")],
+    crearCliente
+);
 
-clienteRoute.put("/:id", actualizarCliente);
+clienteRoute.put("/:id", [validarToken], actualizarCliente);
 
-clienteRoute.put("/deshabilitar/:id", deshabilitarCliente);
+clienteRoute.put("/deshabilitar/:id", [validarToken], deshabilitarCliente);
 
-clienteRoute.delete("/:id", eliminarCliente);
+clienteRoute.delete("/:id", [validarToken, validarRolAdmin], eliminarCliente);
 
 module.exports = clienteRoute;
