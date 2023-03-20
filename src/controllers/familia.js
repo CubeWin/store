@@ -1,25 +1,22 @@
 const { request, response } = require("express");
-const { Cliente } = require("../models");
-const { validarDatos, httpException } = require("../common");
+const { Familia } = require("../models");
+const { httpException, validarDatos } = require("../common");
 
-const crearCliente = async (req = request, res = response) => {
+const crearFamilia = async (req = request, res = response) => {
     try {
-        const { dni, nombre, apaterno, amaterno, correo, telefono } = req.body;
+        const { codigo, categoria, descripcion } = req.body;
 
-        const cliente = new Cliente({
-            dni,
-            nombre,
-            apaterno,
-            amaterno,
-            correo,
-            telefono,
+        const familia = new Familia({
+            codigo,
+            categoria,
+            descripcion,
         });
 
-        const result = await cliente.save();
+        const result = await familia.save();
         if (!result) {
             throw new httpException(
                 500,
-                `no se pudo registro el cliente en la BD.`
+                `no se pudo registro la familia en la BD.`
             );
         }
 
@@ -28,7 +25,7 @@ const crearCliente = async (req = request, res = response) => {
             result,
             request: {
                 type: "GET",
-                url: `http://localhost:${process.env.PORT || 9090}/cliente/${
+                url: `http://localhost:${process.env.PORT || 9090}/familia/${
                     result.id
                 }`,
             },
@@ -41,15 +38,15 @@ const crearCliente = async (req = request, res = response) => {
     }
 };
 
-const ObtenerUnCliente = async (req = request, res = response) => {
+const obtenerUnaFamilia = async (req = request, res = response) => {
     try {
         const { id } = req.params;
 
-        const result = await Cliente.findById(id);
+        const result = await Familia.findById(id);
         if (!result) {
             throw new httpException(
                 400,
-                "El cliente no se encuentra en la BD."
+                "La familia no se encuentra en la BD."
             );
         }
 
@@ -57,7 +54,7 @@ const ObtenerUnCliente = async (req = request, res = response) => {
             result,
             request: {
                 type: "GET",
-                url: `http://localhost:${process.env.PORT || 9090}/cliente/${
+                url: `http://localhost:${process.env.PORT || 9090}/familia/${
                     result._id
                 }`,
             },
@@ -69,9 +66,9 @@ const ObtenerUnCliente = async (req = request, res = response) => {
     }
 };
 
-const ObtenerClientes = async (req = request, res = response) => {
+const obtenerFamilias = async (req = request, res = response) => {
     try {
-        const result = await Cliente.find();
+        const result = await Familia.find();
         const data = {
             count: result.length,
             results: result.map((r) => {
@@ -81,7 +78,7 @@ const ObtenerClientes = async (req = request, res = response) => {
                         type: "GET",
                         url: `http://localhost:${
                             process.env.PORT || 9090
-                        }/cliente/${r.id}`,
+                        }/familia/${r.id}`,
                     },
                 };
             }),
@@ -93,40 +90,32 @@ const ObtenerClientes = async (req = request, res = response) => {
     }
 };
 
-const actualizarCliente = async (req = request, res = response) => {
+const actualizarFamilia = async (req = request, res = response) => {
     try {
         const { id } = req.params;
-        const { dni, nombre, apaterno, amaterno, correo, telefono } = req.body;
+        const { codigo, categoria, descripcion } = req.body;
 
-        // const esCliente = await Cliente.findById(id);
-        // if (!esCliente) {
-        //     throw new httpException(400, "El cliente no se encuentra en la BD.")
-        // }
-
-        const result = await Cliente.findOneAndUpdate(
+        const result = await Familia.findOneAndUpdate(
             { _id: id },
             {
-                dni,
-                nombre,
-                apaterno,
-                amaterno,
-                correo,
-                telefono,
+                codigo,
+                categoria,
+                descripcion,
             }
         );
         if (!result) {
             throw new httpException(
                 400,
-                "El cliente no se encuentra en la BD."
+                "La familia no se encuentra en la BD."
             );
         }
 
         const data = {
-            message: "Se actualizo el cliente correctamente.",
+            message: "Se actualizo correctamente.",
             result,
             request: {
                 type: "GET",
-                url: `http://localhost:${process.env.PORT || 9090}/cliente/${
+                url: `http://localhost:${process.env.PORT || 9090}/familia/${
                     result._id
                 }`,
             },
@@ -138,11 +127,11 @@ const actualizarCliente = async (req = request, res = response) => {
     }
 };
 
-const deshabilitarCliente = async (req = request, res = response) => {
+const deshabilitarFamilia = async (req = request, res = response) => {
     try {
         const { id } = req.params;
 
-        const result = await Cliente.findOneAndUpdate(
+        const result = await Familia.findOneAndUpdate(
             { _id: id },
             {
                 $set: {
@@ -153,16 +142,16 @@ const deshabilitarCliente = async (req = request, res = response) => {
         if (!result) {
             throw new httpException(
                 400,
-                "El cliente no se encuentra en la BD."
+                "La familia no se encuentra en la BD."
             );
         }
 
         const data = {
-            message: "Se deshabilito el cliente correctamente.",
+            message: "Se deshabilito la familia correctamente.",
             result,
             request: {
                 type: "GET",
-                url: `http://localhost:${process.env.PORT || 9090}/cliente/${
+                url: `http://localhost:${process.env.PORT || 9090}/familia/${
                     result.id
                 }`,
             },
@@ -174,13 +163,13 @@ const deshabilitarCliente = async (req = request, res = response) => {
     }
 };
 
-const eliminarCliente = async (req = request, res = response) => {
+const eliminarFamilia = async (req = request, res = response) => {
     try {
         const { id } = req.params;
 
-        const result = await Cliente.findByIdAndDelete({ _id: id });
+        const result = await Familia.findByIdAndDelete({ _id: id });
         if (!result) {
-            throw new httpException(400, `No se encontro el cliente.`);
+            throw new httpException(400, `No se encontro la familia.`);
         }
 
         const data = {
@@ -195,10 +184,10 @@ const eliminarCliente = async (req = request, res = response) => {
 };
 
 module.exports = {
-    crearCliente,
-    actualizarCliente,
-    ObtenerUnCliente,
-    ObtenerClientes,
-    deshabilitarCliente,
-    eliminarCliente,
+    crearFamilia,
+    obtenerFamilias,
+    obtenerUnaFamilia,
+    actualizarFamilia,
+    deshabilitarFamilia,
+    eliminarFamilia,
 };

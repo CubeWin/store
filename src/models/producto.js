@@ -40,10 +40,16 @@ const productoSchema = Schema(
         stock: {
             type: Number,
             required: [true, "stock."],
+            default: 0,
         },
         imagen: {
             type: String,
             default: `no-image`,
+        },
+        estado: {
+            type: Boolean,
+            default: true,
+            required: [true, "El estado es obligatorio"],
         },
     },
     {

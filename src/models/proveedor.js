@@ -2,10 +2,6 @@ const { Schema, model } = require("mongoose");
 
 const proveedorSchema = Schema(
     {
-        id: {
-            type: Schema.Types.ObjectId,
-            required: [true, "No se genero el id correctamente."],
-        },
         ruc: {
             type: Number,
             required: [true, "Ingresar el número de RUC."],

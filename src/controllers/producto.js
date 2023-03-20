@@ -1,25 +1,38 @@
 const { request, response } = require("express");
-const { Cliente } = require("../models");
-const { validarDatos, httpException } = require("../common");
+const { Producto, Familia, Impuesto } = require("../models");
+const { httpException, validarDatos } = require("../common");
 
-const crearCliente = async (req = request, res = response) => {
+const crearProducto = async (req = request, res = response) => {
     try {
-        const { dni, nombre, apaterno, amaterno, correo, telefono } = req.body;
+        const { fam_id, marca, color, unidad, valor, modelo, precio, imp_id } =
+            req.body;
 
-        const cliente = new Cliente({
-            dni,
-            nombre,
-            apaterno,
-            amaterno,
-            correo,
-            telefono,
+        const esFamilia = Familia.findById(fam_id);
+        if (!esFamilia) {
+            throw new httpException(400, "La familia no existe en la BD");
+        }
+
+        const esImpuesto = Impuesto.findById(imp_id);
+        if (!esImpuesto) {
+            throw new httpException(400, "El impuesto no existe en la BD");
+        }
+
+        const producto = new Producto({
+            fam_id,
+            imp_id,
+            marca,
+            color,
+            unidad,
+            valor,
+            modelo,
+            precio,
         });
 
-        const result = await cliente.save();
+        const result = await producto.save();
         if (!result) {
             throw new httpException(
                 500,
-                `no se pudo registro el cliente en la BD.`
+                `no se pudo registro el producto en la BD.`
             );
         }
 
@@ -28,7 +41,7 @@ const crearCliente = async (req = request, res = response) => {
             result,
             request: {
                 type: "GET",
-                url: `http://localhost:${process.env.PORT || 9090}/cliente/${
+                url: `http://localhost:${process.env.PORT || 9090}/producto/${
                     result.id
                 }`,
             },
@@ -41,15 +54,15 @@ const crearCliente = async (req = request, res = response) => {
     }
 };
 
-const ObtenerUnCliente = async (req = request, res = response) => {
+const obtenerUnProducto = async (req = request, res = response) => {
     try {
         const { id } = req.params;
 
-        const result = await Cliente.findById(id);
+        const result = await Producto.findById(id);
         if (!result) {
             throw new httpException(
                 400,
-                "El cliente no se encuentra en la BD."
+                "El producto no se encuentra en la BD."
             );
         }
 
@@ -57,7 +70,7 @@ const ObtenerUnCliente = async (req = request, res = response) => {
             result,
             request: {
                 type: "GET",
-                url: `http://localhost:${process.env.PORT || 9090}/cliente/${
+                url: `http://localhost:${process.env.PORT || 9090}/producto/${
                     result._id
                 }`,
             },
@@ -69,9 +82,9 @@ const ObtenerUnCliente = async (req = request, res = response) => {
     }
 };
 
-const ObtenerClientes = async (req = request, res = response) => {
+const obtenerProductos = async (req = request, res = response) => {
     try {
-        const result = await Cliente.find();
+        const result = await Producto.find();
         const data = {
             count: result.length,
             results: result.map((r) => {
@@ -81,7 +94,7 @@ const ObtenerClientes = async (req = request, res = response) => {
                         type: "GET",
                         url: `http://localhost:${
                             process.env.PORT || 9090
-                        }/cliente/${r.id}`,
+                        }/producto/${r.id}`,
                     },
                 };
             }),
@@ -93,40 +106,48 @@ const ObtenerClientes = async (req = request, res = response) => {
     }
 };
 
-const actualizarCliente = async (req = request, res = response) => {
+const actualizarProducto = async (req = request, res = response) => {
     try {
         const { id } = req.params;
-        const { dni, nombre, apaterno, amaterno, correo, telefono } = req.body;
+        const { fam_id, imp_id, marca, color, unidad, valor, modelo, precio } =
+            req.body;
 
-        // const esCliente = await Cliente.findById(id);
-        // if (!esCliente) {
-        //     throw new httpException(400, "El cliente no se encuentra en la BD.")
-        // }
+        const esFamilia = Familia.findById(fam_id);
+        if (!esFamilia) {
+            throw new httpException(400, "La familia no existe en la BD");
+        }
 
-        const result = await Cliente.findOneAndUpdate(
+        const esImpuesto = Impuesto.findById(imp_id);
+        if (!esImpuesto) {
+            throw new httpException(400, "El impuesto no existe en la BD");
+        }
+
+        const result = await Producto.findOneAndUpdate(
             { _id: id },
             {
-                dni,
-                nombre,
-                apaterno,
-                amaterno,
-                correo,
-                telefono,
+                fam_id,
+                imp_id,
+                marca,
+                color,
+                unidad,
+                valor,
+                modelo,
+                precio,
             }
         );
         if (!result) {
             throw new httpException(
                 400,
-                "El cliente no se encuentra en la BD."
+                "El producto no se encuentra en la BD."
             );
         }
 
         const data = {
-            message: "Se actualizo el cliente correctamente.",
+            message: "Se actualizo correctamente.",
             result,
             request: {
                 type: "GET",
-                url: `http://localhost:${process.env.PORT || 9090}/cliente/${
+                url: `http://localhost:${process.env.PORT || 9090}/producto/${
                     result._id
                 }`,
             },
@@ -138,11 +159,11 @@ const actualizarCliente = async (req = request, res = response) => {
     }
 };
 
-const deshabilitarCliente = async (req = request, res = response) => {
+const deshabilitarProducto = async (req = request, res = response) => {
     try {
         const { id } = req.params;
 
-        const result = await Cliente.findOneAndUpdate(
+        const result = await Producto.findOneAndUpdate(
             { _id: id },
             {
                 $set: {
@@ -153,16 +174,16 @@ const deshabilitarCliente = async (req = request, res = response) => {
         if (!result) {
             throw new httpException(
                 400,
-                "El cliente no se encuentra en la BD."
+                "El producto no se encuentra en la BD."
             );
         }
 
         const data = {
-            message: "Se deshabilito el cliente correctamente.",
+            message: "Se deshabilito el producto correctamente.",
             result,
             request: {
                 type: "GET",
-                url: `http://localhost:${process.env.PORT || 9090}/cliente/${
+                url: `http://localhost:${process.env.PORT || 9090}/producto/${
                     result.id
                 }`,
             },
@@ -172,15 +193,15 @@ const deshabilitarCliente = async (req = request, res = response) => {
         const { status, data } = validarDatos(error);
         res.status(status).json({ data });
     }
-};
+}
 
-const eliminarCliente = async (req = request, res = response) => {
+const eliminarProducto = async (req = request, res = response) => {
     try {
         const { id } = req.params;
 
-        const result = await Cliente.findByIdAndDelete({ _id: id });
+        const result = await Producto.findByIdAndDelete({ _id: id });
         if (!result) {
-            throw new httpException(400, `No se encontro el cliente.`);
+            throw new httpException(400, `No se encontro el producto.`);
         }
 
         const data = {
@@ -195,10 +216,10 @@ const eliminarCliente = async (req = request, res = response) => {
 };
 
 module.exports = {
-    crearCliente,
-    actualizarCliente,
-    ObtenerUnCliente,
-    ObtenerClientes,
-    deshabilitarCliente,
-    eliminarCliente,
+    crearProducto,
+    obtenerUnProducto,
+    obtenerProductos,
+    actualizarProducto,
+    deshabilitarProducto,
+    eliminarProducto,
 };

@@ -1,25 +1,24 @@
 const { request, response } = require("express");
-const { Cliente } = require("../models");
-const { validarDatos, httpException } = require("../common");
+const { Proveedor } = require("../models");
+const { httpException, validarDatos } = require("../common");
 
-const crearCliente = async (req = request, res = response) => {
+const crearProveedor = async (req = request, res = response) => {
     try {
-        const { dni, nombre, apaterno, amaterno, correo, telefono } = req.body;
+        const { ruc, nombre, rubro, correo, telefono } = req.body;
 
-        const cliente = new Cliente({
-            dni,
+        const proveedor = new Proveedor({
+            ruc,
             nombre,
-            apaterno,
-            amaterno,
+            rubro,
             correo,
             telefono,
         });
 
-        const result = await cliente.save();
+        const result = await proveedor.save();
         if (!result) {
             throw new httpException(
                 500,
-                `no se pudo registro el cliente en la BD.`
+                `no se pudo registro el proveedor en la BD.`
             );
         }
 
@@ -28,7 +27,7 @@ const crearCliente = async (req = request, res = response) => {
             result,
             request: {
                 type: "GET",
-                url: `http://localhost:${process.env.PORT || 9090}/cliente/${
+                url: `http://localhost:${process.env.PORT || 9090}/proveedor/${
                     result.id
                 }`,
             },
@@ -41,15 +40,15 @@ const crearCliente = async (req = request, res = response) => {
     }
 };
 
-const ObtenerUnCliente = async (req = request, res = response) => {
+const obtenerUnProveedor = async (req = request, res = response) => {
     try {
         const { id } = req.params;
 
-        const result = await Cliente.findById(id);
+        const result = await Proveedor.findById(id);
         if (!result) {
             throw new httpException(
                 400,
-                "El cliente no se encuentra en la BD."
+                "El proveedor no se encuentra en la BD."
             );
         }
 
@@ -57,7 +56,7 @@ const ObtenerUnCliente = async (req = request, res = response) => {
             result,
             request: {
                 type: "GET",
-                url: `http://localhost:${process.env.PORT || 9090}/cliente/${
+                url: `http://localhost:${process.env.PORT || 9090}/proveedor/${
                     result._id
                 }`,
             },
@@ -69,9 +68,9 @@ const ObtenerUnCliente = async (req = request, res = response) => {
     }
 };
 
-const ObtenerClientes = async (req = request, res = response) => {
+const obtenerProveedores = async (req = request, res = response) => {
     try {
-        const result = await Cliente.find();
+        const result = await Proveedor.find();
         const data = {
             count: result.length,
             results: result.map((r) => {
@@ -81,7 +80,7 @@ const ObtenerClientes = async (req = request, res = response) => {
                         type: "GET",
                         url: `http://localhost:${
                             process.env.PORT || 9090
-                        }/cliente/${r.id}`,
+                        }/proveedor/${r.id}`,
                     },
                 };
             }),
@@ -93,23 +92,17 @@ const ObtenerClientes = async (req = request, res = response) => {
     }
 };
 
-const actualizarCliente = async (req = request, res = response) => {
+const actualizarProveedor = async (req = request, res = response) => {
     try {
         const { id } = req.params;
-        const { dni, nombre, apaterno, amaterno, correo, telefono } = req.body;
+        const { ruc, nombre, rubro, correo, telefono } = req.body;
 
-        // const esCliente = await Cliente.findById(id);
-        // if (!esCliente) {
-        //     throw new httpException(400, "El cliente no se encuentra en la BD.")
-        // }
-
-        const result = await Cliente.findOneAndUpdate(
+        const result = await Proveedor.findOneAndUpdate(
             { _id: id },
             {
-                dni,
+                ruc,
                 nombre,
-                apaterno,
-                amaterno,
+                rubro,
                 correo,
                 telefono,
             }
@@ -117,16 +110,16 @@ const actualizarCliente = async (req = request, res = response) => {
         if (!result) {
             throw new httpException(
                 400,
-                "El cliente no se encuentra en la BD."
+                "El proveedor no se encuentra en la BD."
             );
         }
 
         const data = {
-            message: "Se actualizo el cliente correctamente.",
+            message: "Se actualizo correctamente.",
             result,
             request: {
                 type: "GET",
-                url: `http://localhost:${process.env.PORT || 9090}/cliente/${
+                url: `http://localhost:${process.env.PORT || 9090}/proveedor/${
                     result._id
                 }`,
             },
@@ -138,11 +131,11 @@ const actualizarCliente = async (req = request, res = response) => {
     }
 };
 
-const deshabilitarCliente = async (req = request, res = response) => {
+const deshabilitarProveedor = async (req = request, res = response) => {
     try {
         const { id } = req.params;
 
-        const result = await Cliente.findOneAndUpdate(
+        const result = await Proveedor.findOneAndUpdate(
             { _id: id },
             {
                 $set: {
@@ -153,16 +146,16 @@ const deshabilitarCliente = async (req = request, res = response) => {
         if (!result) {
             throw new httpException(
                 400,
-                "El cliente no se encuentra en la BD."
+                "El proveedor no se encuentra en la BD."
             );
         }
 
         const data = {
-            message: "Se deshabilito el cliente correctamente.",
+            message: "Se deshabilito el proveedor correctamente.",
             result,
             request: {
                 type: "GET",
-                url: `http://localhost:${process.env.PORT || 9090}/cliente/${
+                url: `http://localhost:${process.env.PORT || 9090}/proveedor/${
                     result.id
                 }`,
             },
@@ -174,13 +167,13 @@ const deshabilitarCliente = async (req = request, res = response) => {
     }
 };
 
-const eliminarCliente = async (req = request, res = response) => {
+const eliminarProveedor = async (req = request, res = response) => {
     try {
         const { id } = req.params;
 
-        const result = await Cliente.findByIdAndDelete({ _id: id });
+        const result = await Proveedor.findByIdAndDelete({ _id: id });
         if (!result) {
-            throw new httpException(400, `No se encontro el cliente.`);
+            throw new httpException(400, `No se encontro el proveedor.`);
         }
 
         const data = {
@@ -195,10 +188,10 @@ const eliminarCliente = async (req = request, res = response) => {
 };
 
 module.exports = {
-    crearCliente,
-    actualizarCliente,
-    ObtenerUnCliente,
-    ObtenerClientes,
-    deshabilitarCliente,
-    eliminarCliente,
+    crearProveedor,
+    obtenerUnProveedor,
+    obtenerProveedores,
+    actualizarProveedor,
+    deshabilitarProveedor,
+    eliminarProveedor,
 };

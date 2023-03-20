@@ -14,6 +14,11 @@ const familiaSchema = Schema(
         descripcion: {
             type: String,
         },
+        estado: {
+            type: Boolean,
+            default: true,
+            required: [true, "El estado es obligatorio"],
+        },
     },
     {
         timestamps: true,
