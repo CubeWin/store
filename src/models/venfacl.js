@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose");
 
 const venfaclSchema = Schema(
     {
-        venfacb: {
+        venfach: {
             type: Schema.Types.ObjectId,
             required: [true, "Especificar la factura."],
             ref: "Venfach",
@@ -31,6 +31,14 @@ const venfaclSchema = Schema(
         total: {
             type: Number,
             required: [true, "Especificar el total."],
+        },
+        err: {
+            type: String,
+        },
+        validar: {
+            type: Boolean,
+            default: false,
+            required: [true, "El estado es obligatorio"],
         },
     },
     {

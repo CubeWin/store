@@ -71,7 +71,11 @@ const ObtenerUnCliente = async (req = request, res = response) => {
 
 const ObtenerClientes = async (req = request, res = response) => {
     try {
-        const result = await Cliente.find();
+        const { skip, limit } = req.query;
+        const result = await Cliente.find()
+            .skip(skip)
+            .limit(limit)
+            .sort({ field: "desc" });
         const data = {
             count: result.length,
             results: result.map((r) => {

@@ -16,7 +16,7 @@ const crearFamilia = async (req = request, res = response) => {
         if (!result) {
             throw new httpException(
                 500,
-                `no se pudo registro la familia en la BD.`
+                `No se pudo registro la familia en la BD.`
             );
         }
 
