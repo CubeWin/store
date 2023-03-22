@@ -71,7 +71,7 @@ const ObtenerUnCliente = async (req = request, res = response) => {
 
 const ObtenerClientes = async (req = request, res = response) => {
     try {
-        const { skip, limit } = req.query;
+        const { skip = 0, limit = 5 } = req.query;
         const result = await Cliente.find()
             .skip(skip)
             .limit(limit)

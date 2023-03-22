@@ -83,7 +83,11 @@ const obtenerUnComfach = async (req = request, res = response) => {
 
 const obtenerComfachList = async (req = request, res = response) => {
     try {
-        const result = await Comfach.find();
+        const { skip = 0, limit = 5 } = req.query;
+        const result = await Comfach.find()
+            .skip(skip)
+            .limit(limit)
+            .sort({ field: "desc" });
         const data = {
             count: result.length,
             results: result.map((r) => {

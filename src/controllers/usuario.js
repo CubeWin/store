@@ -84,7 +84,11 @@ const obtenerUnUsuario = async (req = request, res = response) => {
 
 const obtenerUsuarios = async (req = request, res = response) => {
     try {
-        const result = await Usuario.find({ role: "USER_ROLE" });
+        const { skip = 0, limit = 5 } = req.query;
+        const result = await Usuario.find({ role: "USER_ROLE" })
+        .skip(skip)
+        .limit(limit)
+        .sort({ field: "desc" });
         const data = {
             count: result.length,
             results: result.map((r) => {

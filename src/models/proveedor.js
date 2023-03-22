@@ -38,4 +38,4 @@ const proveedorSchema = Schema(
     }
 );
 
-module.exports = model("proveedor", proveedorSchema);
+module.exports = model("Proveedor", proveedorSchema);

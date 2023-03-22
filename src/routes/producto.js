@@ -44,7 +44,7 @@ productoRouter.put(
 productoRouter.delete(
     "/:id",
     [validarToken, validarRoles("ADMIN_ROLE", "USER_ROLE")],
-    actualizarProducto
+    eliminarProducto
 );
 
 module.exports = productoRouter;

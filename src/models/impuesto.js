@@ -6,12 +6,12 @@ const impuestoSchema = Schema(
             type: String,
             required: [true, "Especificar categoría."],
         },
-        procentaje: {
+        porcentaje: {
             type: String,
             required: [true, "Especificar procentaje."],
         },
         multiplicador: {
-            type: String,
+            type: Number,
             required: [true, "Especificar multiplicador."],
         },
         descripcion: {

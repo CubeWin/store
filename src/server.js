@@ -4,7 +4,6 @@ const cors = require("cors");
 const path = require("path");
 
 const { dataBaseConnection } = require("./models/database");
-const { Usuario } = require("./models");
 
 class Server {
     constructor() {
@@ -18,8 +17,18 @@ class Server {
 
     async dbConnection() {
         await dataBaseConnection();
-        const initDB = Usuario.find();
-        console.log((await initDB).length);
+
+        const {
+            genClientData,
+            genProveedorData,
+            genFamiliaProductoData,
+            genUsuario,
+        } = require("./helpers/query.data");
+
+        await genUsuario();
+        await genClientData();
+        await genProveedorData();
+        await genFamiliaProductoData();
     }
 
     middlewares() {

@@ -83,7 +83,11 @@ const obtenerUnVenfach = async (req = request, res = response) => {
 
 const obtenerVenfachList = async (req = request, res = response) => {
     try {
-        const result = await venfach.find();
+        const { skip = 0, limit = 5 } = req.query;
+        const result = await venfach.find()
+        .skip(skip)
+        .limit(limit)
+        .sort({ field: "desc" });
         const data = {
             count: result.length,
             results: result.map((r) => {
