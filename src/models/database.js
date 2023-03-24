@@ -2,8 +2,13 @@ const mongoose = require("mongoose");
 
 const dataBaseConnection = async () => {
     try {
-        const { HOST, DATABASE } = process.env;
-        const URI = `mongodb://${HOST}/${DATABASE}`;
+        const { NODE_ENV, HOST, DATABASE, TEST_DB } = process.env;
+        let URI;
+        if (NODE_ENV == 'test') {
+            URI = `mongodb://${HOST}/${TEST_DB}`;
+        } else {
+            URI = `mongodb://${HOST}/${DATABASE}`;
+        }
 
         mongoose.set("strictQuery", true);
         await mongoose.connect(URI, {

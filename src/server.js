@@ -18,17 +18,17 @@ class Server {
     async dbConnection() {
         await dataBaseConnection();
 
-        const {
-            genClientData,
-            genProveedorData,
-            genFamiliaProductoData,
-            genUsuario,
-        } = require("./helpers/query.data");
+        // const {
+        //     genClientData,
+        //     genProveedorData,
+        //     genFamiliaProductoData,
+        //     genUsuario,
+        // } = require("./helpers/query.data");
 
-        await genUsuario();
-        await genClientData();
-        await genProveedorData();
-        await genFamiliaProductoData();
+        // await genUsuario();
+        // await genClientData();
+        // await genProveedorData();
+        // await genFamiliaProductoData();
     }
 
     middlewares() {
