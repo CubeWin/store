@@ -15,13 +15,13 @@ const {
 
 const clienteRoute = Router();
 
-clienteRoute.get("/", ObtenerClientes);
+clienteRoute.get("/", [validarToken], ObtenerClientes);
 
-clienteRoute.get("/:id", ObtenerUnCliente);
+clienteRoute.get("/:id", [validarToken], ObtenerUnCliente);
 
 clienteRoute.post(
     "/",
-    
+    [validarToken, validarRoles("ADMIN_ROLE", "USER_ROLE")],
     crearCliente
 );
 

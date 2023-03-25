@@ -37,7 +37,7 @@ const crearCliente = async (req = request, res = response) => {
         res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 
@@ -65,7 +65,7 @@ const ObtenerUnCliente = async (req = request, res = response) => {
         res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 
@@ -93,7 +93,7 @@ const ObtenerClientes = async (req = request, res = response) => {
         res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 
@@ -138,7 +138,7 @@ const actualizarCliente = async (req = request, res = response) => {
         res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 
@@ -171,10 +171,10 @@ const deshabilitarCliente = async (req = request, res = response) => {
                 }`,
             },
         };
-        res.status(200).json({ data });
+        res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 
@@ -191,10 +191,10 @@ const eliminarCliente = async (req = request, res = response) => {
             message: "Se elimino correctamente.",
             result,
         };
-        res.status(200).json({ data });
+        res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 
