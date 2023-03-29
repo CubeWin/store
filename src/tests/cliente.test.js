@@ -170,7 +170,7 @@ describe("PUT API Cliente", () => {
         expect(result.body.result).toHaveProperty("estado");
         expect(result.body.result.estado).toBe(false);
     });
-    
+
     it("Deshabilitar un cliente que no existe", async () => {
         const response = await request(appServer.app)
             .put(`/cliente/deshabilitar/641e6b51a3d9b7195176fd84`)

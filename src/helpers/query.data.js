@@ -189,7 +189,7 @@ const genProducto = async(familiaArr, impuestoId)=>{
     return true;
 }
 
-const genUsuario = async() => {
+const genUsuario = async () => {
     const countUsuario = await Usuario.find();
     if (countUsuario.length > 0) {
         return;
@@ -205,7 +205,7 @@ const genUsuario = async() => {
 
     const result = await Usuario.create(USUARIO);
     if (!result) {
-        console.log('No se pudo registrar los Proveedores');
+        console.log("No se pudo registrar los Proveedores");
     }
 };
 
