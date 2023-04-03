@@ -42,7 +42,7 @@ proveedorRouter.put(
 );
 
 proveedorRouter.delete(
-    "/deshabilitar/:id",
+    "/:id",
     [validarToken, validarRoles("ADMIN_ROLE", "USER_ROLE")],
     eliminarProveedor
 );

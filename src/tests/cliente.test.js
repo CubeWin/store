@@ -54,7 +54,9 @@ describe("GET API CLientes", () => {
             .expect("Content-Type", /application\/json/);
         expect(response.statusCode).toBe(400);
         expect(response.body).toHaveProperty("error");
-        expect(response.body.error.message).toBe("El cliente no se encuentra en la BD.");
+        expect(response.body.error.message).toBe(
+            "El cliente no se encuentra en la BD."
+        );
     });
 });
 
@@ -95,8 +97,8 @@ describe("POST API Cliente", () => {
             .expect("Content-Type", /application\/json/);
         expect(response.body).toHaveProperty("errors");
         expect(response.body.errors.length).toBe(2);
-        expect(response.body.errors[0].input).toBe('dni')
-        expect(response.body.errors[1].input).toBe('correo')
+        expect(response.body.errors[0].input).toBe("dni");
+        expect(response.body.errors[1].input).toBe("correo");
     });
 
     it("Fallo al registrar todos los datos requeridos", async () => {
@@ -109,11 +111,11 @@ describe("POST API Cliente", () => {
             .expect("Content-Type", /application\/json/);
         expect(response.body).toHaveProperty("errors");
         expect(response.body.errors.length).toBe(5);
-        expect(response.body.errors[0].input).toBe('dni')
-        expect(response.body.errors[1].input).toBe('nombre')
-        expect(response.body.errors[2].input).toBe('apaterno')
-        expect(response.body.errors[3].input).toBe('amaterno')
-        expect(response.body.errors[4].input).toBe('correo')
+        expect(response.body.errors[0].input).toBe("dni");
+        expect(response.body.errors[1].input).toBe("nombre");
+        expect(response.body.errors[2].input).toBe("apaterno");
+        expect(response.body.errors[3].input).toBe("amaterno");
+        expect(response.body.errors[4].input).toBe("correo");
     });
 });
 
@@ -147,7 +149,9 @@ describe("PUT API Cliente", () => {
             .expect("Content-Type", /application\/json/);
         expect(response.statusCode).toBe(400);
         expect(response.body).toHaveProperty("error");
-        expect(response.body.error.message).toBe("El cliente no se encuentra en la BD.");
+        expect(response.body.error.message).toBe(
+            "El cliente no se encuentra en la BD."
+        );
     });
 
     it("Deshabilitar un Cliente", async () => {
@@ -179,7 +183,9 @@ describe("PUT API Cliente", () => {
             .expect("Content-Type", /application\/json/);
         expect(response.statusCode).toBe(400);
         expect(response.body).toHaveProperty("error");
-        expect(response.body.error.message).toBe("El cliente no se encuentra en la BD.");
+        expect(response.body.error.message).toBe(
+            "El cliente no se encuentra en la BD."
+        );
     });
 });
 

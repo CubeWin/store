@@ -50,7 +50,7 @@ const crearProducto = async (req = request, res = response) => {
         res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 
@@ -78,7 +78,7 @@ const obtenerUnProducto = async (req = request, res = response) => {
         res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 
@@ -106,7 +106,7 @@ const obtenerProductos = async (req = request, res = response) => {
         res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 
@@ -159,7 +159,7 @@ const actualizarProducto = async (req = request, res = response) => {
         res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 
@@ -192,10 +192,10 @@ const deshabilitarProducto = async (req = request, res = response) => {
                 }`,
             },
         };
-        res.status(200).json({ data });
+        res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 }
 
@@ -212,10 +212,10 @@ const eliminarProducto = async (req = request, res = response) => {
             message: "Se elimino correctamente.",
             result,
         };
-        res.status(200).json({ data });
+        res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 

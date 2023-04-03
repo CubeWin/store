@@ -34,7 +34,7 @@ const crearFamilia = async (req = request, res = response) => {
         res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 
@@ -62,7 +62,7 @@ const obtenerUnaFamilia = async (req = request, res = response) => {
         res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 
@@ -70,9 +70,9 @@ const obtenerFamilias = async (req = request, res = response) => {
     try {
         const { skip = 0, limit = 5 } = req.query;
         const result = await Familia.find()
-        .skip(skip)
-        .limit(limit)
-        .sort({ field: "desc" });;
+            .skip(skip)
+            .limit(limit)
+            .sort({ field: "desc" });
         const data = {
             count: result.length,
             results: result.map((r) => {
@@ -90,7 +90,7 @@ const obtenerFamilias = async (req = request, res = response) => {
         res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 
@@ -127,7 +127,7 @@ const actualizarFamilia = async (req = request, res = response) => {
         res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 
@@ -160,10 +160,10 @@ const deshabilitarFamilia = async (req = request, res = response) => {
                 }`,
             },
         };
-        res.status(200).json({ data });
+        res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 
@@ -180,10 +180,10 @@ const eliminarFamilia = async (req = request, res = response) => {
             message: "Se elimino correctamente.",
             result,
         };
-        res.status(200).json({ data });
+        res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 

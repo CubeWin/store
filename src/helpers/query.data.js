@@ -36,7 +36,7 @@ const genClientData = async () =>{
     if (!result) {
         console.log('No se pudo registrar los Clientes');
     }
-    console.log("🚀 ~ file: query.data.js:36 ~ genClientData ~ result:", result)
+    // console.log("🚀 ~ file: query.data.js:36 ~ genClientData ~ result:", result)
 }
 
 genProveedorData = async () =>{
@@ -73,7 +73,7 @@ genProveedorData = async () =>{
     if (!result) {
         console.log('No se pudo registrar los Proveedores');
     }
-    console.log("🚀 ~ file: query.data.js:73 ~ genProveedorData= ~ result:", result)
+    // console.log("🚀 ~ file: query.data.js:73 ~ genProveedorData= ~ result:", result)
 }
 
 genFamiliaProductoData = async () =>{
@@ -198,7 +198,7 @@ const genUsuario = async () => {
         username: "manager",
         password:
             "$2a$10$bWiqdw6DM48iZAG9s2ciquystGzkBukeUAEqJb5jsHbau7uH0MQT2",
-        email: "email@dominio.ok",
+        email: "email@smalltemp.ok",
         name: "nombre user",
         role: "ADMIN_ROLE",
     };

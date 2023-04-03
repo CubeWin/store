@@ -51,7 +51,7 @@ const crearUsuario = async (req = request, res = response) => {
         res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 
@@ -78,7 +78,7 @@ const obtenerUnUsuario = async (req = request, res = response) => {
         res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 
@@ -86,9 +86,9 @@ const obtenerUsuarios = async (req = request, res = response) => {
     try {
         const { skip = 0, limit = 5 } = req.query;
         const result = await Usuario.find({ role: "USER_ROLE" })
-        .skip(skip)
-        .limit(limit)
-        .sort({ field: "desc" });
+            .skip(skip)
+            .limit(limit)
+            .sort({ field: "desc" });
         const data = {
             count: result.length,
             results: result.map((r) => {
@@ -106,7 +106,7 @@ const obtenerUsuarios = async (req = request, res = response) => {
         res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 
@@ -114,8 +114,6 @@ const cambiarPWD = async (req = request, res = response) => {
     try {
         const { id } = req.params;
         const { password, npassword } = req.body;
-        console.log(password);
-        console.log(npassword);
         const isUser = await usuario.findById(id);
         if (!isUser) {
             throw new httpException(
@@ -158,7 +156,7 @@ const cambiarPWD = async (req = request, res = response) => {
         res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 
@@ -198,7 +196,7 @@ const eliminarUsuario = async (req = request, res = response) => {
         const result = await Usuario.findByIdAndDelete({ _id: id });
 
         if (!result) {
-            throw new httpException(400, `No se elimino el usuario.`);
+            throw new httpException(400, `No se encontro el usuario.`);
         }
 
         const data = {
