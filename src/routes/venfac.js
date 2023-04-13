@@ -27,7 +27,7 @@ venfachRouter.get(
 );
 
 venfachRouter.post(
-    "/:id",
+    "/",
     [validarToken, validarRoles("ADMIN_ROLE", "USER_ROLE")],
     crearVenfach
 );
@@ -45,7 +45,7 @@ venfachRouter.put(
 );
 
 venfachRouter.delete(
-    "/validar/:id",
+    "/:id",
     [validarToken, validarRoles("ADMIN_ROLE", "USER_ROLE")],
     eliminarVenfach
 );

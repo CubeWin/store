@@ -27,8 +27,8 @@ venfaclRouter.put(
     actualizarVenfacl
 );
 
-venfaclRouter.post(
-    "/",
+venfaclRouter.delete(
+    "/:id",
     [validarToken, validarRoles("ADMIN_ROLE", "USER_ROLE")],
     eliminarVenfacl
 );

@@ -15,7 +15,7 @@ const crearComfacl = async (req = request, res = response) => {
         } = req.body;
 
         const esComfach = await Comfach.findById(comfach);
-        if (esComfach) {
+        if (!esComfach) {
             throw new httpException(
                 400,
                 "La factura no se encuentra en la BD."
@@ -24,7 +24,7 @@ const crearComfacl = async (req = request, res = response) => {
 
         // verificar si el producto existe y tiene stock
         const esProducto = await Producto.findById(prod_id);
-        if (esProducto) {
+        if (!esProducto) {
             throw new httpException(
                 400,
                 "El producto no se encuentra en la BD."
@@ -63,7 +63,7 @@ const crearComfacl = async (req = request, res = response) => {
         res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 
@@ -88,7 +88,7 @@ const ListarComfacl = async (req = request, res = response) => {
         res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 
@@ -149,7 +149,7 @@ const actualizarComfacl = async (req = request, res = response) => {
         res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 
@@ -183,7 +183,7 @@ const eliminarComfacl = async (req = request, res = response) => {
         res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 

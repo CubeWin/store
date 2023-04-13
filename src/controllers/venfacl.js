@@ -13,9 +13,9 @@ const crearVenfacl = async (req = request, res = response) => {
             impuesto,
             total,
         } = req.body;
-
+        console.log('controller line',venfach);
         const esVenfach = Venfach.findById(venfach);
-        if (esVenfach) {
+        if (!esVenfach) {
             throw new httpException(
                 400,
                 "La factura no se encuentra en la BD."
@@ -24,7 +24,7 @@ const crearVenfacl = async (req = request, res = response) => {
 
         // verificar si el producto existe y tiene stock
         const esProducto = Producto.findById(prod_id);
-        if (esProducto) {
+        if (!esProducto) {
             throw new httpException(
                 400,
                 "El producto no se encuentra en la BD."

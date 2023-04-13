@@ -21,6 +21,14 @@ const comfachSchema = Schema(
             default: true,
             required: [true, "El estado es obligatorio"],
         },
+        err: {
+            type: String,
+        },
+        validar: {
+            type: Boolean,
+            default: false,
+            required: [true, "El estado es obligatorio"],
+        },
     },
     {
         timestamps: true,

@@ -43,7 +43,7 @@ const crearVenfach = async (req = request, res = response) => {
         res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 
@@ -77,17 +77,18 @@ const obtenerUnVenfach = async (req = request, res = response) => {
         res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 
 const obtenerVenfachList = async (req = request, res = response) => {
     try {
         const { skip = 0, limit = 5 } = req.query;
-        const result = await venfach.find()
-        .skip(skip)
-        .limit(limit)
-        .sort({ field: "desc" });
+        const result = await venfach
+            .find()
+            .skip(skip)
+            .limit(limit)
+            .sort({ field: "desc" });
         const data = {
             count: result.length,
             results: result.map((r) => {
@@ -105,7 +106,7 @@ const obtenerVenfachList = async (req = request, res = response) => {
         res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 
@@ -121,8 +122,11 @@ const actualizarVenfach = async (req = request, res = response) => {
                 "La factura no se encuentra en la BD."
             );
         }
+        if (getVenfach.validar) {
+            throw new httpException(401, `La factura no puede ser modificada.`);
+        }
 
-        if (getVenfach.clie_id !== clie_id) {
+        if (clie_id && getVenfach.clie_id !== clie_id) {
             const esCliente = await Cliente.findById(clie_id);
             if (!esCliente) {
                 throw new httpException(
@@ -160,7 +164,7 @@ const actualizarVenfach = async (req = request, res = response) => {
         res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 
@@ -171,6 +175,9 @@ const eliminarVenfach = async (req = request, res = response) => {
         const getVenfach = await Venfach.findById(id);
         if (!getVenfach) {
             throw new httpException(400, `No se encontro la factura.`);
+        }
+        if (getVenfach.validar) {
+            throw new httpException(401, `La factura no puede ser modificada.`);
         }
 
         const getVenfacl = await Venfacl.find({ venfach: getVenfach._id });
@@ -190,10 +197,10 @@ const eliminarVenfach = async (req = request, res = response) => {
             message: "Se elimino correctamente.",
             result,
         };
-        res.status(200).json({ data });
+        res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 
@@ -272,10 +279,10 @@ const validarVenfach = async (req = request, res = response) => {
                 : "Error en la validación",
             result,
         };
-        res.status(200).json({ data });
+        res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 

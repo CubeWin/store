@@ -11,7 +11,7 @@ const dataBaseConnection = async () => {
         }
 
         mongoose.set("strictQuery", true);
-        await mongoose.connect(URI, {
+        mongoose.connect(URI, {
             useUnifiedTopology: true,
             useNewUrlParser: true,
         });

@@ -42,7 +42,7 @@ const crearComfach = async (req = request, res = response) => {
         res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 
@@ -59,10 +59,6 @@ const obtenerUnComfach = async (req = request, res = response) => {
         }
 
         const productos = await Comfacl.find({ comfach: id });
-        if (!productos) {
-            // verificar
-            throw new httpException(400, "Los productos no se cargaron.");
-        }
 
         const data = {
             result,
@@ -77,7 +73,7 @@ const obtenerUnComfach = async (req = request, res = response) => {
         res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 
@@ -105,7 +101,7 @@ const obtenerComfachList = async (req = request, res = response) => {
         res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 
@@ -121,8 +117,11 @@ const actualizarComfach = async (req = request, res = response) => {
                 "La factura no se encuentra en la BD."
             );
         }
+        if (getComfach.validar) {
+            throw new httpException(401, `La factura no puede ser modificada.`);
+        }
 
-        if (getComfach.prov_id !== prov_id) {
+        if (prov_id && getComfach.prov_id !== prov_id) {
             const isProveedor = await Proveedor.findById(prov_id);
             if (!isProveedor) {
                 throw new httpException(
@@ -160,7 +159,7 @@ const actualizarComfach = async (req = request, res = response) => {
         res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 
@@ -171,6 +170,9 @@ const eliminarComfach = async (req = request, res = response) => {
         const getComfach = await Comfach.findById(id);
         if (!getComfach) {
             throw new httpException(400, `No se encontro la factura.`);
+        }
+        if (getComfach.validar) {
+            throw new httpException(401, `La factura no puede ser modificada.`);
         }
 
         const getComfacl = await Comfacl.find({ comfach: getComfach._id });
@@ -190,10 +192,10 @@ const eliminarComfach = async (req = request, res = response) => {
             message: "Se elimino correctamente.",
             result,
         };
-        res.status(200).json({ data });
+        res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 
@@ -272,10 +274,10 @@ const validarComfach = async (req = request, res = response) => {
                 : "Error en la validación",
             result,
         };
-        res.status(200).json({ data });
+        res.status(200).json(data);
     } catch (error) {
         const { status, data } = validarDatos(error);
-        res.status(status).json({ data });
+        res.status(status).json(data);
     }
 };
 
